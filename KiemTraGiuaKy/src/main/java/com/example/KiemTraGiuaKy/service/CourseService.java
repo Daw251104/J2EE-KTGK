@@ -16,8 +16,11 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public Page<Course> findPaginated(int pageNo, int pageSize) {
+    public Page<Course> findPaginated(int pageNo, int pageSize, String keyword) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        if (keyword != null && !keyword.isEmpty()) {
+            return courseRepository.findByNameContainingIgnoreCase(keyword, pageable);
+        }
         return courseRepository.findAll(pageable);
     }
 

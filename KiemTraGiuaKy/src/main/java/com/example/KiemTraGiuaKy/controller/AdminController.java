@@ -30,7 +30,7 @@ public class AdminController {
     @GetMapping
     public String listCourses(Model model, @RequestParam(value = "page", defaultValue = "1") int pageNo) {
         int pageSize = 10;
-        var page = courseService.findPaginated(pageNo, pageSize);
+        var page = courseService.findPaginated(pageNo, pageSize, null);
         model.addAttribute("listCourses", page.getContent());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());

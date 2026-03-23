@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Học phần của tôi - Course Registration')}"></head>
+<body class="flex flex-col min-h-screen bg-gray-50">
+    <div th:replace="~{layout :: navbar}"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-7xl">
+        <div class="mb-8 flex items-center justify-between">
+            <h1 class="text-3xl font-bold text-gray-800">Khóa học của tôi</h1>
+        </div>
+
+        <div th:if="${#lists.isEmpty(enrollments)}" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 text-center">
+            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-indigo-50 mb-6 text-primary">
+                <i class="fa-solid fa-book-open-reader text-4xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Bạn chưa đăng ký học phần nào</h2>
+            <p class="text-gray-500 mb-8 max-w-md mx-auto">Hãy vào Trang chủ để khám phá và đăng ký những học phần thú vị nhé!</p>
+            <a th:href="@{/}" class="bg-primary hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all inline-block">
+                Khám phá Học phần ngay
+            </a>
+        </div>
+
+        <div th:if="${!#lists.isEmpty(enrollments)}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div th:each="enrollment : ${enrollments}" class="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover-lift flex flex-col h-full group">
+                <div class="relative h-40 bg-gray-200 overflow-hidden">
+                    <img th:if="${enrollment.course.image != null and enrollment.course.image != ''}" th:src="@{'/images/' + ${enrollment.course.image}}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div th:unless="${enrollment.course.image != null and enrollment.course.image != ''}" class="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-300">
+                        <i class="fa-solid fa-book-open text-4xl"></i>
+                    </div>
+                    <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-primary shadow-sm" th:text="${enrollment.course.category.name}">Category</div>
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2" th:text="${enrollment.course.name}">Course Name</h3>
+                    <div class="flex items-center text-sm text-gray-500 mb-2">
+                        <i class="fa-solid fa-user-tie mr-2 text-indigo-400"></i>
+                        <span th:text="${enrollment.course.lecturer}">Lecturer</span>
+                    </div>
+                    
+                    <div class="mt-4 bg-indigo-50 rounded-lg p-3 text-sm">
+                        <div class="flex justify-between text-gray-600 mb-1">
+                            <span>Ngày đăng ký:</span>
+                            <span class="font-medium text-gray-900" th:text="${#temporals.format(enrollment.enrollDate, 'dd/MM/yyyy')}">12/12/2026</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Số tín chỉ:</span>
+                            <span class="font-medium text-gray-900" th:text="${enrollment.course.credits}">3</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-center">
+                        <span class="text-green-600 flex items-center font-medium bg-green-50 px-4 py-2 rounded-full w-full justify-center">
+                            <i class="fa-solid fa-check-circle mr-2"></i> Đã đăng ký thành công
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-auto py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500">
+            &copy; 2026 EduPortal. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

@@ -49,8 +49,25 @@
                         <a th:href="@{/admin/courses}" sec:authorize="hasAuthority('ADMIN')" class="border-transparent text-gray-500 hover:border-primary hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                             Quản lý Học phần
                         </a>
+                        <a th:href="@{/my-courses}" sec:authorize="hasAuthority('STUDENT')" class="border-transparent text-gray-500 hover:border-primary hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                            Khóa học của tôi
+                        </a>
                     </div>
                 </div>
+                
+                <!-- Search Form -->
+                <div class="hidden md:flex flex-1 items-center justify-center px-8">
+                    <form th:action="@{/home}" method="get" class="w-full max-w-lg">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                            </div>
+                            <input type="text" name="keyword" th:value="${keyword}" placeholder="Tìm kiếm học phần..." 
+                                   class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition duration-150 ease-in-out">
+                        </div>
+                    </form>
+                </div>
+
                 <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
                     <div sec:authorize="!isAuthenticated()">
                         <a th:href="@{/login}" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">Đăng nhập</a>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class EnrollmentService {
@@ -25,5 +26,9 @@ public class EnrollmentService {
         } else {
             throw new RuntimeException("Bạn đã đăng ký học phần này rồi.");
         }
+    }
+
+    public List<Enrollment> getEnrollmentsByStudent(Student student) {
+        return enrollmentRepository.findByStudent(student);
     }
 }

@@ -37,7 +37,7 @@ public class WebSecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                .requestMatchers("/enroll/**").hasAuthority("STUDENT")
+                .requestMatchers("/enroll/**", "/my-courses").hasAuthority("STUDENT")
                 .requestMatchers("/", "/home", "/courses", "/register", "/login", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
             )

@@ -17,15 +17,18 @@ public class HomeController {
     private CourseService courseService;
 
     @GetMapping({ "/", "/home", "/courses" })
-    public String viewHomePage(Model model, @RequestParam(value = "page", defaultValue = "1") int pageNo) {
+    public String viewHomePage(Model model, 
+                               @RequestParam(value = "page", defaultValue = "1") int pageNo,
+                               @RequestParam(value = "keyword", required = false) String keyword) {
         int pageSize = 5;
-        Page<Course> page = courseService.findPaginated(pageNo, pageSize);
+        Page<Course> page = courseService.findPaginated(pageNo, pageSize, keyword);
         List<Course> listCourses = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("listCourses", listCourses);
+        model.addAttribute("keyword", keyword);
         return "home";
     }
 }
